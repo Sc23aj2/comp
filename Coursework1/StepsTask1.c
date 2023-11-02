@@ -49,24 +49,32 @@ int main() {
         printf("Error opening file\n");
         return 1;
     }
-    int n = 5;
-    FITNESS_DATA fitness_array[59] = {};
+    
+    FITNESS_DATA fitness_struct[100];
 
-    int i;
+    char* sp;
+    int i = 0;
     int buffer_size = 100;
     char line_buffer[buffer_size];
 
     while (fgets(line_buffer, buffer_size, fitness_data)) {
-        for (i = 0; i < 59; i += 1){
-        sscanf(line_buffer, "%s", fitness_array[i].date);
-        sscanf(line_buffer, "%s", fitness_array[i].time);
-        sscanf(line_buffer, "%d", &fitness_array[i].steps);
-        }
+        sp = strtok(line_buffer, ",");
+        strcpy(fitness_struct[i].date, sp);
+
+        sp = strtok(NULL, ",");
+        strcpy(fitness_struct[i].time, sp);
+
+        sp = strtok(NULL, ",");
+        fitness_struct[i].steps = atoi(sp);
+
+        i +=1;
+
     }
 
-    for (i = 0; i < 59; i += 1){
-        printf("%s\n", fitness_array[i].date);
+    for (i = 0; i < 59; i +=1){
+        printf("%s\n", fitness_struct[i].date);
+        printf("%s\n", fitness_struct[i].time);
+        printf("%d\n", fitness_struct[i].steps);
     }
-    
 
 }
