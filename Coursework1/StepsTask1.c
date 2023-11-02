@@ -49,5 +49,24 @@ int main() {
         printf("Error opening file\n");
         return 1;
     }
+    int n = 5;
+    FITNESS_DATA fitness_array[59] = {};
+
+    int i;
+    int buffer_size = 100;
+    char line_buffer[buffer_size];
+
+    while (fgets(line_buffer, buffer_size, fitness_data)) {
+        for (i = 0; i < 59; i += 1){
+        sscanf(line_buffer, "%s", fitness_array[i].date);
+        sscanf(line_buffer, "%s", fitness_array[i].time);
+        sscanf(line_buffer, "%d", &fitness_array[i].steps);
+        }
+    }
+
+    for (i = 0; i < 59; i += 1){
+        printf("%s\n", fitness_array[i].date);
+    }
+    
 
 }
