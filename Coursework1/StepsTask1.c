@@ -52,29 +52,28 @@ int main() {
     
     FITNESS_DATA fitness_struct[100];
 
-    char* sp;
+    char date[11];
+    char time[6];
+    char steps[10];
+
     int i = 0;
     int buffer_size = 100;
     char line_buffer[buffer_size];
 
     while (fgets(line_buffer, buffer_size, fitness_data)) {
-        sp = strtok(line_buffer, ",");
-        strcpy(fitness_struct[i].date, sp);
+        tokeniseRecord(line_buffer, ",", date, time, steps);
+        strcpy(fitness_struct[i].date, date);
+        strcpy(fitness_struct[i].time, time);
+        fitness_struct[i].steps = atoi(steps);
 
-        sp = strtok(NULL, ",");
-        strcpy(fitness_struct[i].time, sp);
-
-        sp = strtok(NULL, ",");
-        fitness_struct[i].steps = atoi(sp);
-
-        i +=1;
-
+        i += 1;
     }
 
-    for (i = 0; i < 59; i +=1){
-        printf("%s\n", fitness_struct[i].date);
-        printf("%s\n", fitness_struct[i].time);
-        printf("%d\n", fitness_struct[i].steps);
-    }
+    printf("Number of records in file: %d\n", i);
+   
+    int a;
 
+    for (a = 0; a < 3; a += 1){
+        printf("%s/%s/%d\n",  fitness_struct[a].date, fitness_struct[a].time, fitness_struct[a].steps);
+    }
 }
