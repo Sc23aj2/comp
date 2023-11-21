@@ -44,6 +44,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
+    while(1){
     printf("Menu Options:\n");
     printf("A: Specify the filename to be imported\n");  
     printf("B: Display the total number of records in the file\n");
@@ -67,17 +68,6 @@ int main() {
         int i = 0;
         char line_buffer_2[buffer_size];
 
-        char* fitness_new = "FitnessData_2023.csv";
-        FILE *fitness_data_new = open_file(fitness_new, "r");
-
-        while (fgets(line_buffer_2, buffer_size, fitness_data_new)) {
-        tokeniseRecord(line_buffer_2, ",", date, time, steps);
-        strcpy(fitness_struct[i].date, date);
-        strcpy(fitness_struct[i].time, time);
-        fitness_struct[i].steps = atoi(steps);
-
-        i += 1;
-    }
 
     switch(choice){
         
@@ -94,8 +84,18 @@ int main() {
 
     case 'B':
     case 'b':
+     while (fgets(line_buffer_2, buffer_size, fitness_data)) {
+        tokeniseRecord(line_buffer_2, ",", date, time, steps);
+        strcpy(fitness_struct[i].date, date);
+        strcpy(fitness_struct[i].time, time);
+        fitness_struct[i].steps = atoi(steps);
+
+        i += 1;}
+
         printf("Total records: %d\n", i);
         
+        break;
+    }
     }    
 
 

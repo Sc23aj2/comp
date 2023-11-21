@@ -16,7 +16,7 @@ void readNames(char Names[][30], int maxNames) {
         printf("Enter full name %d (First Last): ", i + 1);
 
         // Read the full name with spaces
-        fgets(Names[i], 50, stdin);
+        fgets(Names[i], 30, stdin);
 
         // Replace the newline character with a null character
         Names[i][strcspn(Names[i], "\n")] = '\0';
