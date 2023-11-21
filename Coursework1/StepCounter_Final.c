@@ -52,6 +52,7 @@ int main() {
     printf("E: Find the mean step count of all the records in the file\n");
     printf("F: Find the longest continuous period where the step count is above 500 steps\n");
     printf("Q: Quit\n");
+    printf("Enter choice: ");
 
     choice = getchar();
 
@@ -66,8 +67,20 @@ int main() {
         int i = 0;
         char line_buffer_2[buffer_size];
 
-    switch(choice){
+        char* fitness_new = "FitnessData_2023.csv";
+        FILE *fitness_data_new = open_file(fitness_new, "r");
 
+        while (fgets(line_buffer_2, buffer_size, fitness_data_new)) {
+        tokeniseRecord(line_buffer_2, ",", date, time, steps);
+        strcpy(fitness_struct[i].date, date);
+        strcpy(fitness_struct[i].time, time);
+        fitness_struct[i].steps = atoi(steps);
+
+        i += 1;
+    }
+
+    switch(choice){
+        
     case 'A':
     case 'a':
         printf("Input filename: \n");
@@ -81,17 +94,8 @@ int main() {
 
     case 'B':
     case 'b':
-    while (fgets(line_buffer_2, buffer_size, fitness_data)) {
-        tokeniseRecord(line_buffer_2, ",", date, time, steps);
-        strcpy(fitness_struct[i].date, date);
-        strcpy(fitness_struct[i].time, time);
-        fitness_struct[i].steps = atoi(steps);
-
-        i += 1;
-    }
-        printf("Number of records in file: %d\n", i);
-
-        break;
+        printf("Total records: %d\n", i);
+        
     }    
 
 
