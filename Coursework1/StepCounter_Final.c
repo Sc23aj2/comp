@@ -44,7 +44,8 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
-    while(1){
+    int true = 1;
+    while(true == 1){
     printf("Menu Options:\n");
     printf("A: Specify the filename to be imported\n");  
     printf("B: Display the total number of records in the file\n");
@@ -56,8 +57,12 @@ int main() {
     printf("Enter choice: ");
 
     choice = getchar();
+    
+    printf("%d\n", choice);
 
-    while (getchar() != '\n');
+    // if (choice != 'a'|| choice != 'A' || choice != 'Q'){
+    //     printf("Invalid choice. Try again.\n");
+    //  }
 
         char line[buffer_size];
         char fitness[buffer_size];
@@ -95,6 +100,13 @@ int main() {
         printf("Total records: %d\n", i);
         
         break;
+
+    case 'Q':
+    case 'q':
+        true = 0;
+        return 0;
+
+        break;    
     }
     }    
 
