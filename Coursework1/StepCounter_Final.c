@@ -45,7 +45,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
 // Complete the main function
 int main() {
     int true = 1;
-    while(true == 1){
+    while(true == 1){    
     printf("Menu Options:\n");
     printf("A: Specify the filename to be imported\n");  
     printf("B: Display the total number of records in the file\n");
@@ -57,15 +57,11 @@ int main() {
     printf("Enter choice: ");
 
     choice = getchar();
-    
-    printf("%d\n", choice);
+    while (getchar() != '\n');
 
-    // if (choice != 'a'|| choice != 'A' || choice != 'Q'){
-    //     printf("Invalid choice. Try again.\n");
-    //  }
 
         char line[buffer_size];
-        char fitness[buffer_size];
+        char filename[buffer_size];
 
         char date[11];
         char time[6];
@@ -78,17 +74,18 @@ int main() {
         
     case 'A':
     case 'a':
-        printf("Input filename: \n");
+        printf("Input filename: ");
 
         fgets(line, buffer_size, stdin);
-        sscanf(line, "%s", fitness);
+        sscanf(line, " %s ", filename);
 
-        FILE *fitness_data = open_file(fitness, "r");
+        FILE *fitness_data = open_file(filename, "r");
         
         break;
 
     case 'B':
     case 'b':
+    if(fitness_data != NULL){
      while (fgets(line_buffer_2, buffer_size, fitness_data)) {
         tokeniseRecord(line_buffer_2, ",", date, time, steps);
         strcpy(fitness_struct[i].date, date);
@@ -98,16 +95,22 @@ int main() {
         i += 1;}
 
         printf("Total records: %d\n", i);
-        
+    }
+    else{
+        printf("Please specify a filename first.\n");
+    }
         break;
 
     case 'Q':
     case 'q':
         true = 0;
-        return 0;
+        return 0;   
 
+    default :
+        printf("Invalid choice. Try again.\n");
         break;    
     }
+   
     }    
 
 
