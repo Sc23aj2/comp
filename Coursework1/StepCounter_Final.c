@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "FitnessDataStruct.h"
 
 // Struct moved to header file
@@ -66,7 +67,6 @@ int main() {
         char date[11];
         char time[6];
         char steps[10];
-        int i = 0;
         char line_buffer_2[buffer_size];
 
 
@@ -74,26 +74,27 @@ int main() {
         
     case 'A':
     case 'a':
+        
         printf("Input filename: ");
-
         fgets(line, buffer_size, stdin);
         sscanf(line, " %s ", filename);
 
         FILE *fitness_data = open_file(filename, "r");
-        
-        break;
 
-    case 'B':
-    case 'b':
-    if(fitness_data != NULL){
-     while (fgets(line_buffer_2, buffer_size, fitness_data)) {
+        int i = 0;
+        while (fgets(line_buffer_2, buffer_size, fitness_data)) {
         tokeniseRecord(line_buffer_2, ",", date, time, steps);
         strcpy(fitness_struct[i].date, date);
         strcpy(fitness_struct[i].time, time);
         fitness_struct[i].steps = atoi(steps);
 
         i += 1;}
+     
+        break;
 
+    case 'B':
+    case 'b':
+    if(fitness_data != NULL){
         printf("Total records: %d\n", i);
     }
     else{
@@ -101,6 +102,61 @@ int main() {
     }
         break;
 
+    case 'C':
+    case 'c':
+        if(fitness_data != NULL){
+
+
+        }
+
+         else{
+        printf("Please specify a filename first.\n");
+    }
+        break;
+
+    case 'D':
+    case 'd':
+         if(fitness_data != NULL){
+    
+
+        }
+
+         else{
+        printf("Please specify a filename first.\n");
+    }
+        break;
+
+    case 'E':
+    case 'e':
+         if(fitness_data != NULL){
+            int mean = 0;
+            for (int a = 0; a < i; a += 1){
+                mean += fitness_struct[a].steps;
+            }
+            mean /= i;
+            int rounded_mean = round(mean);
+            printf("Mean step count: %d\n", rounded_mean);
+    
+
+        }
+
+         else{
+        printf("Please specify a filename first.\n");
+    }
+        break;
+
+    case 'F':
+    case 'f':
+         if(fitness_data != NULL){
+    
+
+        }
+
+         else{
+        printf("Please specify a filename first.\n");
+    }
+        break;        
+        
     case 'Q':
     case 'q':
         true = 0;
