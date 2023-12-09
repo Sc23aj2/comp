@@ -105,7 +105,15 @@ int main() {
     case 'C':
     case 'c':
         if(fitness_data != NULL){
-
+            int least_steps = fitness_struct[0].steps;
+            int z;
+            for(int b = 0; b < i; b += 1){
+                if (fitness_struct[b].steps < least_steps){
+                    least_steps = fitness_struct[b].steps;
+                    z = b;
+                }
+            }
+            printf("Fewest steps: %s %s\n", fitness_struct[z].date, fitness_struct[z].time);
 
         }
 
@@ -117,7 +125,16 @@ int main() {
     case 'D':
     case 'd':
          if(fitness_data != NULL){
-    
+            int most_steps = fitness_struct[0].steps;
+            int d;
+            for(int e = 0; e < i; e += 1){
+                if (fitness_struct[e].steps > most_steps){
+                    most_steps = fitness_struct[e].steps;
+                    d = e;
+                }
+            }
+            printf("Largest steps: %s %s\n", fitness_struct[d].date, fitness_struct[d].time);
+
 
         }
 
@@ -168,19 +185,4 @@ int main() {
     }
    
     }    
-
-
-
-
-   
-   
-  
-
-   
-   
-    // int a;
-
-    // for (a = 0; a < 3; a += 1){
-    //     printf("%s/%s/%d\n",  fitness_struct[a].date, fitness_struct[a].time, fitness_struct[a].steps);
-    // }
 }
