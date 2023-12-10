@@ -146,7 +146,7 @@ int main() {
     case 'E':
     case 'e':
          if(fitness_data != NULL){
-            int mean = 0;
+            float mean = 0;
             for (int a = 0; a < i; a += 1){
                 mean += fitness_struct[a].steps;
             }
@@ -165,7 +165,24 @@ int main() {
     case 'F':
     case 'f':
          if(fitness_data != NULL){
-    
+            int y = 0;
+            int continuous = 0;
+            int end;
+            int start;
+            for(int h = 0; h < i; h += 1){
+                if(fitness_struct[h].steps > 500){
+                    y += 1;
+                    if(continuous < y){
+                        continuous = y;
+                        end = h;                 
+                    }
+                }
+                else{
+                    y = 0;
+                }
+            }
+            start = end - continuous + 1;
+            printf("Longest period start: %s %s\nLongest period end: %s %s\n",fitness_struct[start].date, fitness_struct[start].time, fitness_struct[end].date, fitness_struct[end].time);
 
         }
 
