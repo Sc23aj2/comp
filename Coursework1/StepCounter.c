@@ -193,6 +193,7 @@ int main() {
         
     case 'Q':
     case 'q':
+        fclose(fitness_data);
         true = 0;
         return 0;   
 
