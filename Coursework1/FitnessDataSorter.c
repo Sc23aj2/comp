@@ -66,6 +66,7 @@ int main() {
 
         i += 1;
     }
+    fclose(fitness_data);
 
     for(int a = 0; a < i; a += 1){
         if(fitness_struct[a].steps == 0){
@@ -74,35 +75,33 @@ int main() {
     }
     }
 
-    int most_steps = 0;
     FitnessData fitness_struct_arranged[100];
     int d;
+    int z;
 
+        for(z = 0; z < i; z += 1){
+            int most_steps = 0;
             for(int e = 0; e < i; e += 1){
                 if (fitness_struct[e].steps > most_steps){
                     most_steps = fitness_struct[e].steps;
                     d = e;
                 }
             }
-            fitness_struct_arranged[0].steps = most_steps;
-            printf("%d\n", fitness_struct_arranged[0].steps);
+            strcpy(fitness_struct_arranged[z].date, fitness_struct[d].date);
+            strcpy(fitness_struct_arranged[z].time, fitness_struct[d].time);
+            fitness_struct_arranged[z].steps = most_steps;
             for(int g = d; g < i; g += 1){
                 fitness_struct[g] = fitness_struct[g + 1];
             }
-           
-           most_steps = 0;
-            for(int e = 0; e < i; e += 1){
-                printf("%d\n", fitness_struct[e].steps);
-                if (fitness_struct[e].steps > most_steps){
-                    most_steps = fitness_struct[e].steps;
-                    d = e;
-                }
-            }
-            fitness_struct_arranged[1].steps = most_steps;
-            printf("%d\n", fitness_struct_arranged[1].steps);
-            for(int g = d; g < i; g += 1){
-                fitness_struct[g] = fitness_struct[g + 1];
-            }
-            printf("%d", fitness_struct[d].steps);
-            
+        }
+
+    char tsv_file[buffer_size];    
+    snprintf(tsv_file, buffer_size, "%s.tsv", filename);
+    FILE *new_fitness_data = open_file(tsv_file, "w");
+    for(int m = 0; m < i; m += 1){      
+    fprintf(new_fitness_data,"%s\t%s\t%d\n",fitness_struct_arranged[m].date, fitness_struct_arranged[m].time, fitness_struct_arranged[m].steps);  
+}
+
+    printf("Data sorted and written to FitnessData_2023.csv.tsv\n");
+    fclose(new_fitness_data);
 }
