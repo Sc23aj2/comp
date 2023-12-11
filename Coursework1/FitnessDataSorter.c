@@ -50,4 +50,59 @@ int main() {
     sscanf(line, " %s ", filename);
 
     FILE *fitness_data = open_file(filename, "r");
+
+    char date[11];
+    char time[6];
+    int steps;
+    char line_buffer_2[buffer_size];
+    int i = 0;
+
+    while (fgets(line_buffer_2, buffer_size, fitness_data)) {
+        tokeniseRecord(line_buffer_2, ',', date, time, &steps);
+   
+        strcpy(fitness_struct[i].date, date);
+        strcpy(fitness_struct[i].time, time);
+        fitness_struct[i].steps = steps;
+
+        i += 1;
+    }
+
+    for(int a = 0; a < i; a += 1){
+        if(fitness_struct[a].steps == 0){
+        printf("Error: invalid file\n");
+        exit(1);
+    }
+    }
+
+    int most_steps = 0;
+    FitnessData fitness_struct_arranged[100];
+    int d;
+
+            for(int e = 0; e < i; e += 1){
+                if (fitness_struct[e].steps > most_steps){
+                    most_steps = fitness_struct[e].steps;
+                    d = e;
+                }
+            }
+            fitness_struct_arranged[0].steps = most_steps;
+            printf("%d\n", fitness_struct_arranged[0].steps);
+            for(int g = d; g < i; g += 1){
+                fitness_struct[g] = fitness_struct[g + 1];
+            }
+           
+           most_steps = 0;
+            for(int e = 0; e < i; e += 1){
+                printf("%d\n", fitness_struct[e].steps);
+                if (fitness_struct[e].steps > most_steps){
+                    most_steps = fitness_struct[e].steps;
+                    d = e;
+                }
+            }
+            fitness_struct_arranged[1].steps = most_steps;
+            printf("%d\n", fitness_struct_arranged[1].steps);
+            for(int g = d; g < i; g += 1){
+                fitness_struct[g] = fitness_struct[g + 1];
+            }
+            printf("%d", fitness_struct[d].steps);
+            
 }
