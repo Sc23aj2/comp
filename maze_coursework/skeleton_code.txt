@@ -5,7 +5,8 @@
 #define MAX_WIDTH 100
 #define MIN_WIDTH 5
 
-// The maze structure for how many rows and columns it's going to have. What will its be height and width.
+// The maze structure for how many rows and columns it's going to have. What will its be height and width, and also the 
+current position of the player.
 
 typedef struct {
     char walls[MAX_HEIGHT][MAX_WIDTH];
@@ -18,26 +19,38 @@ typedef struct {
 // Functions implemented for the working of the maze
 
 void loadmaze(char *filename, Maze *maze);
-    This function will open a 
+    This function will load the maze from a file. using for loop. find the starting position of 
+    the player(S) and then close the file,
+
 void displayMaze(Maze *maze);
+this will print the maze and tell us about the current position of the player denoted by X.
+
 void movePlayer(Maze *maze, char direction);
+this will move the player in  the direction commanded
+
 int checkMove(Maze *maze, int row, int col);
+this will avoid the player from going out of bounds or into the wall.
+
 int isGameOver(Maze *maze);
+tells us if the player has reached the end(E).
 
 int main(int argc, char *argv[]) {
+    // It expects the name of the maze file.
     if (argc != 2) {
         printf("Usage: %s <maze_file>\n", argv[0]);
         return 1;
     }
 
     Maze maze;
-    loadMazeFromFile(argv[1], &maze);
+    loadmaze(argv[1], &maze);
 
     char move;
     while (!isGameOver(&maze)) {
-        printf("Enter move (W/A/S/D/M): ");
-        scanf(" %c", &move);
+        printf("Enter (W/A/S/D/M): ");
+        scanf(" %s", &move);
 
+// on enetering M or m it displays the maze else it will return back to moving according
+to the input given
         if (move == 'M' || move == 'm') {
             displayMaze(&maze);
         } else {
@@ -45,97 +58,9 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    printf("Congratulations! You won the game!\n");
+    printf("Congratulations! You have won the game!\n");
 
     return 0;
 }
 
-void loadMazeFromFile(char *filename, Maze *maze) {
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Error: Unable to open file %s\n", filename);
-        exit(1);
-    }
 
-    // Read maze dimensions
-    fscanf(file, "%d %d\n", &maze->height, &maze->width);
-    if (maze->height < MIN_HEIGHT || maze->height > MAX_HEIGHT ||
-        maze->width < MIN_WIDTH || maze->width > MAX_WIDTH) {
-        printf("Error: Invalid maze dimensions\n");
-        exit(1);
-    }
-
-    // Read maze cells
-    for (int i = 0; i < maze->height; i++) {
-        for (int j = 0; j < maze->width; j++) {
-            fscanf(file, " %c", &maze->cells[i][j]);
-            if (maze->cells[i][j] == 'S') {
-                maze->player_row = i;
-                maze->player_col = j;
-            }
-        }
-    }
-
-    fclose(file);
-}
-
-void displayMaze(Maze *maze) {
-    for (int i = 0; i < maze->height; i++) {
-        for (int j = 0; j < maze->width; j++) {
-            if (i == maze->player_row && j == maze->player_col) {
-                printf("X ");
-            } else {
-                printf("%c ", maze->cells[i][j]);
-            }
-        }
-        printf("\n");
-    }
-}
-
-void movePlayer(Maze *maze, char direction) {
-    int new_row = maze->player_row;
-    int new_col = maze->player_col;
-
-    switch (direction) {
-        case 'W':
-        case 'w':
-            new_row--;
-            break;
-        case 'A':
-        case 'a':
-            new_col--;
-            break;
-        case 'S':
-        case 's':
-            new_row++;
-            break;
-        case 'D':
-        case 'd':
-            new_col++;
-            break;
-        default:
-            printf("Invalid move\n");
-            return;
-    }
-
-    if (checkMove(maze, new_row, new_col)) {
-        maze->player_row = new_row;
-        maze->player_col = new_col;
-    } else {
-        printf("Invalid move\n");
-    }
-}
-
-int checkMove(Maze *maze, int row, int col) {
-    if (row < 0 || row >= maze->height || col < 0 || col >= maze->width) {
-        return 0; // Move out of bounds
-    }
-    if (maze->cells[row][col] == '#') {
-        return 0; // Move into a wall
-    }
-    return 1; // Valid move
-}
-
-int isGameOver(Maze *maze) {
-    return maze->cells[maze->player_row][maze->player_col] == 'E';
-}
