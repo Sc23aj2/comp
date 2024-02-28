@@ -1,0 +1,13 @@
+// non-integer characters as widths or height
+foo 10
+
+##########
+#S      E#
+#   #####
+#       #
+##### # #
+#     # #
+##### # #
+#       #
+##### # #
+##########

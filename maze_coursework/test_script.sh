@@ -1,33 +1,59 @@
 #!/bin/bash
 
-#to check wether the correct maze file is working properly or not
-echo "Test 1: Correct maze file"
-./maze test_data/correct_maze.txt > output.txt
-if [ "$(cat output.txt)" == "Congratulations! You have won the game!" ]; then
+#to check wether the correct maze file is working properly or not with the right inputs
+echo "Test 1: Correct maze file with right inputs"
+./maze maze_coursework/test_data/correct_maze.txt Inputs/correct_input.txt > output.txt
+if grep -q "Congratulations! You have won the game!" output.txt; then
     echo "PASS"
 else
     echo "FAIL"
 fi
 
-# Test 2: Invalid maze file (width and height not integers)
+
+# to check wether height and width are integers
 echo "Test 2: Invalid maze file (width and height not integers)"
-./maze test_data/invalid_maze_1.txt > output.txt
-assert_equals "Error: Invalid maze file. Width and height must be integers." "$(cat output.txt)"
+./maze test_data/incorrect_maze1.txt > output.txt
+if [ "$(cat output.txt)" == "Error: Invalid maze file. Width and height must be integers." ]; then
+    echo "PASS"
+else
+    echo "FAIL" 
+fi
 
-# Test 3: Invalid maze file (width and height out of range)
+# if height and width are out of range
 echo "Test 3: Invalid maze file (width and height out of range)"
-./maze test_data/invalid_maze_2.txt > output.txt
-assert_equals "Error: Invalid maze file. Width and height must be between 5 and 100." "$(cat output.txt)"
+./maze test_data/incorrect_maze_2.txt > output.txt
+if [ "$(cat output.txt)" == "Error: Invalid maze file. Width and height are out of range." ]; then
+    echo "PASS"
+else
+    echo "FAIL" 
+fi
 
-# Test 4: Invalid maze file (maze data not valid)
-echo "Test 4: Invalid maze file (maze data not valid)"
-./maze test_data/invalid_maze_3.txt > output.txt
-assert_equals "Error: Invalid maze file. Maze data must be a rectangle with walls (#), paths ( ), starting point (S), and exit (E)." "$(cat output.txt)"
+# Not in a rectangular shape
+echo "Test 4: Invalid maze file (maze shape not rectangular)"
+./maze test_data/incorrect_maze_3.txt > output.txt
+if [ "$(cat output.txt)" == "Error: each row and column should be the same length" ]; then
+    echo "PASS"
+else
+    echo "FAIL" 
+fi
 
-# Test 5: Invalid maze file (maze data not a rectangle)
-echo "Test 5: Invalid maze file (maze data not a rectangle)"
-./maze test_data/invalid_maze_4.txt > output.txt
-assert_equals "Error: Invalid maze file. Maze data must be a rectangle with walls (#), paths ( ), starting point (S), and exit (E)." "$(cat output.txt)"
+# Irregular height
+echo "Test 5: Invalid maze file (irregular height)"
+./maze test_data/incorrect_maze_4.txt > output.txt
+if [ "$(cat output.txt)" == "Error: irregular height" ]; then
+    echo "PASS"
+else
+    echo "FAIL" 
+fi
+
+# Irregular width
+echo "Test 5: Invalid maze file (irregular width)"
+./maze test_data/incorrect_maze_5.txt > output.txt
+if [ "$(cat output.txt)" == "Error: irregular width" ]; then
+    echo "PASS"
+else
+    echo "FAIL" 
+fi
 
 # Test 6: Player moves into a wall
 echo "Test 6: Player moves into a wall"
