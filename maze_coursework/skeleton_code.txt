@@ -31,6 +31,12 @@ this will move the player in  the direction commanded
 int checkMove(Maze *maze, int row, int col);
 this will avoid the player from going out of bounds or into the wall.
 
+int blockedEnding(Maze *maze)
+this will avoid from producing blocked endings
+
+int blockedStarting(Maze *maze)
+this will avoid from producing blocked startings
+
 int isGameOver(Maze *maze);
 tells us if the player has reached the end(E).
 

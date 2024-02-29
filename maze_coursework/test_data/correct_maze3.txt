@@ -1,0 +1,9 @@
+//player moves off map
+
+5 5
+
+# ###
+#S  #
+#   #
+#   #
+#E ##
